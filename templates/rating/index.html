@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load bootstrap4 %}
+
+<body>
+
+    <select>
+        {% for subject in subject_list %}
+        <option value="{% url 'rating:subject' subject.id %}"> {{ subject.fullname }} - {{ subject.tutor }}</option>
+        {% endfor %}
+    </select>
+
+    <h1>Subjects:</h1>
+    {% for subject in subject_list %}
+        <a href="{% url 'rating:subject' subject.id %}" > <p>{{ subject.fullname }} - {{ subject.tutor }}</p> </a>
+    {% endfor %}
+
+    <form action="{% url 'rating:user' user.id %}">
+        <input type="submit" value="Info o użytkowniku" />
+    </form>
+
+</body>
+</html>

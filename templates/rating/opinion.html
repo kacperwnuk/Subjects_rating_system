@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+    <h1>{{ opinion.title }}</h1>
+    <h2>{{ opinion.subject }} - {{ opinion.date }}</h2>
+    <p>{{ opinion.text }}</p>
+    <p>Ocena: {{ opinion.rating }}</p>
+
+    <form action="{% url 'rating:subject' opinion.subject.pk %}">
+        <input type="submit" value="Strona przedmiotu" />
+    </form>
+</body>
+</html>

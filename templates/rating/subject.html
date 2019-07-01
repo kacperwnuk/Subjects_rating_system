@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+    <h1>{{ subject.fullname }} - {{ subject.shortcut }}</h1>
+    <h2>{{ subject.tutor }}</h2>
+    <p>Info: {{ subject.basic_info }}</p>
+    <p>Ocena: {{ subject.rating|floatformat:2 }} </p>
+
+    <h3>Opinie:</h3>
+    {% for opinion in subject.opinion_set.all %}
+        <a href="{% url 'rating:opinion' opinion.id %}"> <p>{{ opinion.title }} - {{ opinion.text|truncatechars:20 }}</p> </a>
+    {% endfor %}
+
+    <form action="{% url 'rating:index' %}">
+        <input type="submit" value="Strona główna" />
+    </form>
+
+    <form action="{% url 'rating:add_opinion' subject.id %}">
+        <input type="submit" value="Dodaj opinię" />
+    </form>
+
+</body>
+</html>

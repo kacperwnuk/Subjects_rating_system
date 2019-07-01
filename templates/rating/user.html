@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load bootstrap4 %}
+
+<body>
+    <h1>Login: {{ user.basic_info.username }}</h1>
+    <h2>Email: {{ user.basic_info.email }}</h2>
+    <p>Średnia ocena przedmiotów: {{ user.avg_rating }}</p>
+
+    <form action="{% url 'rating:index' %}">
+        <input type="submit" value="Strona główna" />
+    </form>
+</body>
+</html>
