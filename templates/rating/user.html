@@ -1,14 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-{% load bootstrap4 %}
-
-<body>
+{% extends "base.html" %}
+{% block title %}
+    Panel użytkownika
+{% endblock %}
+{% block body %}
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
     <h1>Login: {{ user.basic_info.username }}</h1>
     <h2>Email: {{ user.basic_info.email }}</h2>
-    <p>Średnia ocena przedmiotów: {{ user.avg_rating }}</p>
-
-    <form action="{% url 'rating:index' %}">
-        <input type="submit" value="Strona główna" />
-    </form>
-</body>
-</html>
+    <p>Ilość wystawonych opinii - {{ user.number_of_opinions }}</p>
+    <p>Średnia ocena przedmiotów: {{ user.avg_rating|floatformat:2 }}</p>
+    <p>Ostatnie opinie:</p>
+    <div class="list-group">
+        {% for opinion in opinions %}
+            <a href="{% url 'rating:opinion' opinion.pk %}" class="list-group-item list-group-item-action">{{ opinion.subject.shortcut }} - {{ opinion.title }} - {{ opinion.rating }}</a><br/>
+        {% endfor %}
+    </div>
+    {% buttons %}
+        <a href="{% url 'rating:index' %}" class="btn btn-danger">Strona główna</a>
+    {% endbuttons %}
+{% endblock %}

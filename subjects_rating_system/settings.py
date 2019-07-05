@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'rating',
     'django_readonly_field',
     'bootstrap4',
+    'django_tables2',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -119,3 +121,9 @@ STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = 'rating:index'
 LOGIN_URL = '/account/login'
+
+EMAIL_HOST = os.environ.get("EMAIL_HOST")
+EMAIL_PORT = os.environ.get("EMAIL_PORT")
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
+EMAIL_USE_TLS = True

@@ -1,23 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-{% load bootstrap4 %}
+{% extends "base.html" %}
 
-<body>
 
+
+{% block title %}
+    Strona główna
+{% endblock %}
+{% block body %}
+
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+<!--
     <select>
         {% for subject in subject_list %}
         <option value="{% url 'rating:subject' subject.id %}"> {{ subject.fullname }} - {{ subject.tutor }}</option>
         {% endfor %}
     </select>
-
+-->
     <h1>Subjects:</h1>
-    {% for subject in subject_list %}
-        <a href="{% url 'rating:subject' subject.id %}" > <p>{{ subject.fullname }} - {{ subject.tutor }}</p> </a>
-    {% endfor %}
-
-    <form action="{% url 'rating:user' user.id %}">
-        <input type="submit" value="Info o użytkowniku" />
+    <form method="get">
+        Ocena
+        <select name="rating">
+              <option value=""></option>
+              <option value="1">Powyżej 1</option>
+              <option value="2">Powyżej 2</option>
+              <option value="3">Powyżej 3</option>
+              <option value="4">Powyżej 4</option>
+              <option value="5">Powyżej 5</option>
+         </select>
+        Ilość opinii
+        <select name="number_of_opinions">
+              <option value=""></option>
+              <option value="1">1 lub więcej</option>
+              <option value="5">5 lub więcej</option>
+              <option value="10">10 lub więcej</option>
+         </select>
+         <input type="submit" value="Submit">
     </form>
+    <div class="list-group">
+        {% for subject in subjects %}
+             <li class="list-group-item d-flex justify-content-between align-items-center">
+                <a href="{% url 'rating:subject' subject.id %}" class="list-group-item list-group-item-action"> <p>{{ subject.fullname }} - {{ subject.tutor }}</p> </a>
+                <span class="badge badge-primary badge-pill">{{ subject.number_of_opinions }}</span>
+             </li>
+        {% endfor %}
+    </div>
 
-</body>
-</html>
+    {% buttons %}
+        <a href="{% url 'rating:user' logged_user.id %}" class="btn btn-primary">Info o użytkowniku</a>
+        <a href="{% url 'rating:add_subject' %}" class="btn btn-danger">Dodaj przedmiot</a>
+    {% endbuttons %}
+{% endblock %}
