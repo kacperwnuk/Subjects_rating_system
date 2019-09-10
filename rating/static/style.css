@@ -1,0 +1,31 @@
+body {
+    background: #ffffff;
+    padding-left: 15%;
+    padding-right: 15%;
+    min-height: 100vh;
+}
+
+h1, h2, h3 {
+    text-align: center;
+}
+
+.form-group {
+    text-align: center;
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+
+.buttons {
+    text-align: center;
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+.logout_button {
+    position: fixed;
+    left: 0;
+    bottom: 2%;
+    width: 100%;
+    text-align: center;
+}

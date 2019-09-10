@@ -1,0 +1,25 @@
+{% extends "rating/base.html" %}
+{% block title %}
+    Opinia
+{% endblock %}
+{% block body %}
+
+    <h1>{{ opinion.title }}</h1>
+    <h2>{{ opinion.subject }}</h2>
+    <h2> Data dodania: {{ opinion.date }}</h2>
+    <h3>
+        {% if opinion.last_edited %}
+            Data ostatniej edycji: {{ opinion.last_edited }}
+        {% endif %}
+    </h3>
+    <p>{{ opinion.text }}</p>
+    <p>Ocena: {{ opinion.rating }}</p>
+
+    <div class="buttons">
+        {% if logged_user == opinion.user %}
+            <a href="{% url 'rating:modify_opinion' opinion.pk %}" class="btn btn-primary">Edytuj opinię</a>
+        {% endif %}
+        <a href="{% url 'rating:subject' opinion.subject.pk %}" class="btn btn-danger">Strona główna</a>
+    </div>
+
+{% endblock %}

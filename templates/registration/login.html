@@ -1,0 +1,18 @@
+{% extends "rating/base.html" %}
+{% block title %}
+   Logowanie
+{% endblock %}
+{% block body %}
+
+ <h2>Login</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <div class="buttons">
+        <button type="submit">Login</button>
+        <a href="{% url 'rating:register' %}" class="btn btn-success">Utwórz konto</a>
+    </div>
+  </form>
+
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "rating/base.html" %}
+{% block title %}
+   Dodaj opinię
+{% endblock %}
+{% block body %}
+    {% load bootstrap4 %}
+
+    <h1>{{ subject.shortcut }}</h1>
+    <h2>Dodaj opinię</h2>
+        <form method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+
+        <div class="buttons">
+            <button type="submit" class="btn btn-primary">Dodaj</button>
+            <a href="{% url 'rating:index' %}" class="btn btn-danger">Wróć</a>
+        </div>
+    </form>
+{% endblock %}
