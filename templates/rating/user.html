@@ -1,22 +1,22 @@
 {% extends "rating/base.html" %}
 {% block title %}
-    Panel użytkownika
+    User panel
 {% endblock %}
 {% block body %}
     <h1>Login: {{ user.basic_info.username }}</h1>
     <h2>Email: {{ user.basic_info.email }}</h2>
-    <p>Ilość wystawonych opinii - {{ user.number_of_opinions }}</p>
-    <p>Średnia ocena przedmiotów: {{ user.avg_rating|floatformat:2 }}</p>
-    <p>Ostatnie opinie:</p>
+    <p>Opinions created - {{ user.number_of_opinions }}</p>
+    <p>Average mark: {{ user.avg_rating|floatformat:2 }}</p>
+    <p>Last opinions:</p>
     <div class="list-group">
         {% for opinion in opinions %}
             <a href="{% url 'rating:opinion' opinion.pk %}" class="list-group-item list-group-item-action align-items-center">{{ opinion.subject.shortcut }} - {{ opinion.title }} - {{ opinion.rating }}</a><br/>
         {% endfor %}
     </div>
     <div class="buttons">
-        <a href="{% url 'rating:index' %}" class="btn btn-danger">Strona główna</a>
+        <a href="{% url 'rating:index' %}" class="btn btn-danger">Main page</a>
         {% if user.basic_info.is_staff %}
-            <a href="{% url 'rating:activate_subject' %}" class="btn btn-primary">Nieaktywne przedmioty</a>
+            <a href="{% url 'rating:activate_subject' %}" class="btn btn-primary">Inactive subjects</a>
         {% endif %}
     </div>
 {% endblock %}

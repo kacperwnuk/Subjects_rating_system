@@ -13,12 +13,12 @@
             <input type="submit" value="Aktywuj">
         {% else %}
             <div class="info">
-                <p>Brak przedmiotów do aktywowania!</p>
+                <p>There is no subjects to activate!</p>
             </div>
         {% endif %}
     </form>
     <div class="buttons">
-        <a href="{% url 'rating:index' %}" class="btn btn-primary">Strona główna</a>
+        <a href="{% url 'rating:index' %}" class="btn btn-primary">Main page</a>
     </div>
 {#    <select>#}
 {#        {% for subject in subject_list %}#}

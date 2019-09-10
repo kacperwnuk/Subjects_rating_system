@@ -3,7 +3,7 @@
 
 
 {% block title %}
-    Strona główna
+    Main page
 {% endblock %}
 {% block body %}
 
@@ -14,26 +14,26 @@
         {% endfor %}
     </select>
 -->
-    <h1>Przedmioty</h1>
+    <h1>Subjects</h1>
     <br/>
     <form method="get">
-        Ocena
+        Mark
         <select name="rating">
               <option value=""></option>
-              <option value="1">Powyżej 1</option>
-              <option value="2">Powyżej 2</option>
-              <option value="3">Powyżej 3</option>
-              <option value="4">Powyżej 4</option>
-              <option value="5">Powyżej 5</option>
+              <option value="1">More than 1</option>
+              <option value="2">More than 2</option>
+              <option value="3">More than 3</option>
+              <option value="4">More than 4</option>
+              <option value="5">More than 5</option>
          </select>
-        Ilość opinii
+        Number of opinions
         <select name="number_of_opinions">
               <option value=""></option>
-              <option value="1">1 lub więcej</option>
-              <option value="5">5 lub więcej</option>
-              <option value="10">10 lub więcej</option>
+              <option value="1">1 or more</option>
+              <option value="5">5 or more</option>
+              <option value="10">10 or more</option>
          </select>
-         <input type="submit" value="Filtruj">
+         <input type="submit" value="Filter" class="btn btn-primary">
     </form>
     <div class="list-group">
         {% for subject in subjects %}
@@ -45,7 +45,7 @@
     </div>
 
     <div class="buttons">
-        <a href="{% url 'rating:user' logged_user.id %}" class="btn btn-primary">Info o użytkowniku</a>
-        <a href="{% url 'rating:add_subject' %}" class="btn btn-danger">Dodaj przedmiot</a>
+        <a href="{% url 'rating:user' logged_user.id %}" class="btn btn-primary">User info</a>
+        <a href="{% url 'rating:add_subject' %}" class="btn btn-danger">Add subject</a>
     </div>
 {% endblock %}
