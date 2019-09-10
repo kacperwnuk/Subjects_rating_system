@@ -1,3 +1,5 @@
+from enum import Enum
+
 from django.contrib.auth.models import User as AuthUser
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
@@ -12,7 +14,8 @@ class User(models.Model):
 
     @property
     def avg_rating(self):
-        return Opinion.objects.filter(user=self).aggregate(Avg('rating'))['rating__avg'] or 'Nie oceniłeś jeszcze żadnego przedmiotu'
+        return Opinion.objects.filter(user=self).aggregate(Avg('rating'))[
+                   'rating__avg'] or 'Nie oceniłeś jeszcze żadnego przedmiotu'
 
     @property
     def number_of_opinions(self):
@@ -22,13 +25,19 @@ class User(models.Model):
         return self.basic_info.username
 
 
+class Status(Enum):
+    WAITING_FOR_CONFIRMATION = 'waiting_for_confirmation'
+    ACCEPTED = 'accepted'
+
+
 class Subject(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     fullname = models.CharField(max_length=100)
     shortcut = models.CharField(max_length=10)
     tutor = models.CharField(max_length=100)
     basic_info = models.TextField(max_length=300)
-    
+    status = models.CharField(choices=((tag.name, tag.value) for tag in Status), max_length=50, default=Status.WAITING_FOR_CONFIRMATION.name)
+
     @property
     def rating(self):
         return self.opinion_set.all().aggregate(Avg('rating'))['rating__avg'] or 'Brak oceny'
@@ -61,3 +70,5 @@ class Opinion(models.Model):
 
     def __str__(self):
         return self.title
+
+

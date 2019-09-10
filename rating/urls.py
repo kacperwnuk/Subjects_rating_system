@@ -15,5 +15,6 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('<int:pk>/profile/', views.UserView.as_view(), name='user'),
     path('<int:pk>/subject/add_opinion', views.AddOpinionView.as_view(), name='add_opinion'),
+    path('activate_subject', views.ActivateSubjectView.as_view(), name='activate_subject'),
 ]
 

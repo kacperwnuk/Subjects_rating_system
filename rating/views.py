@@ -2,18 +2,18 @@ import datetime
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, AccessMixin
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from django.views import generic
 from django.views.decorators.http import require_GET
 
 from rating.filters import OpinionFilter
-from rating.models import Subject, Opinion, User
+from rating.models import Subject, Opinion, User, Status
 
 
 def find_subjects(request):
-    subjects = Subject.objects.all()
+    subjects = Subject.objects.all().filter(status=Status.ACCEPTED.value)
     if request.GET.get('rating'):
         subjects = [subject for subject in subjects if
                     isinstance(subject.rating, float) and subject.rating > float(request.GET['rating'])]
@@ -33,7 +33,7 @@ def index(request):
     return render(request, 'rating/index.html', context)
 
 
-class SubjectView(LoginRequiredMixin, generic.DetailView):
+class SubjectView(LoginRequiredMixin, UserPassesTestMixin, generic.DetailView):
     template_name = 'rating/subject.html'
     model = Subject
 
@@ -46,6 +46,10 @@ class SubjectView(LoginRequiredMixin, generic.DetailView):
         print(context)
         return context
 
+    def test_func(self):
+        subject = Subject.objects.filter(pk=self.kwargs['pk'])[0]
+        return subject.status == Status.ACCEPTED.value
+
 
 class AddSubjectView(LoginRequiredMixin, generic.CreateView):
     template_name = 'rating/add_subject.html'
@@ -53,7 +57,12 @@ class AddSubjectView(LoginRequiredMixin, generic.CreateView):
     fields = ['fullname', 'shortcut', 'tutor', 'basic_info']
 
     def form_valid(self, form):
-        form.instance.user = User.objects.get(basic_info=self.request.user)
+        user = User.objects.get(basic_info=self.request.user)
+        form.instance.user = user
+        if user.basic_info.is_staff:
+            form.instance.status = Status.ACCEPTED.value
+        else:
+            form.instance.status = Status.WAITING_FOR_CONFIRMATION.value
         # send_mail(
         #     'Subject added successfully',
         #     f'You just added subject written down below:\n{form.instance.whole_info()}',
@@ -124,3 +133,14 @@ class UserView(LoginRequiredMixin, generic.DetailView):
         logged_user = User.objects.get(basic_info=self.request.user)
         context['opinions'] = Opinion.objects.filter(user=logged_user).order_by('date')[:5]
         return context
+
+
+class ActivateSubjectView(LoginRequiredMixin, UserPassesTestMixin, generic.ListView):
+    template_name = 'rating/activate_subject.html'
+    model = Subject
+
+    def test_func(self):
+        return self.request.user.is_staff
+
+    def get_queryset(self):
+        return Subject.objects.all().filter(status=Status.WAITING_FOR_CONFIRMATION)

@@ -78,8 +78,12 @@ WSGI_APPLICATION = 'subjects_rating_system.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'subject_rating_sys',
+        'USER': 'postgres',
+        'PASSWORD': os.environ.get('DB_PASSWD'),
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
@@ -120,6 +124,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = 'rating:index'
+LOGOUT_REDIRECT_URL = '/account/login'
 LOGIN_URL = '/account/login'
 
 EMAIL_HOST = os.environ.get("EMAIL_HOST")

@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "rating/base.html" %}
 
 
 
@@ -7,9 +7,6 @@
 {% endblock %}
 {% block body %}
 
-    {% load bootstrap4 %}
-    {% bootstrap_css %}
-    {% bootstrap_javascript jquery='full' %}
 <!--
     <select>
         {% for subject in subject_list %}
@@ -18,6 +15,7 @@
     </select>
 -->
     <h1>Subjects:</h1>
+    <br/>
     <form method="get">
         Ocena
         <select name="rating">
@@ -35,7 +33,7 @@
               <option value="5">5 lub więcej</option>
               <option value="10">10 lub więcej</option>
          </select>
-         <input type="submit" value="Submit">
+         <input type="submit" value="Filtruj">
     </form>
     <div class="list-group">
         {% for subject in subjects %}
@@ -46,8 +44,8 @@
         {% endfor %}
     </div>
 
-    {% buttons %}
+    <div class="buttons">
         <a href="{% url 'rating:user' logged_user.id %}" class="btn btn-primary">Info o użytkowniku</a>
         <a href="{% url 'rating:add_subject' %}" class="btn btn-danger">Dodaj przedmiot</a>
-    {% endbuttons %}
+    </div>
 {% endblock %}

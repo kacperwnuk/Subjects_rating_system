@@ -18,6 +18,6 @@ class OpinionFilter(django_filters.FilterSet):
     # rating = django_filters.NumberFilter(choices=STATUS_CHOICES, lookup_expr='gt')
     # year__gt = django_filters.NumberFilter(name='date', lookup_expr='year__gt')
 
-    class Meta:
-        model = Opinion
-        fields = ['date']
+    # class Meta:
+    #     model = Opinion
+    #     fields = ['subject']

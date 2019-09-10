@@ -1,11 +1,8 @@
-{% extends "base.html" %}
+{% extends "rating/base.html" %}
 {% block title %}
     {{ subject.shortcut }}
 {% endblock %}
 {% block body %}
-    {% load bootstrap4 %}
-    {% bootstrap_css %}
-    {% bootstrap_javascript jquery='full' %}
 
     <h1>{{ subject.fullname }} - {{ subject.shortcut }}</h1>
     <h2>{{ subject.tutor }}</h2>
@@ -15,16 +12,16 @@
     <h3>Opinie:</h3>
     <form method="get">
         {{ filter.form.as_p }}
-        <button type="submit">Search</button>
+        <button type="submit">Filtruj</button>
     </form>
-    {{ object.pk }}
     {% for opinion in filter.qs %}
         <a href="{% url 'rating:opinion' opinion.id %}"> <p>{{ opinion.title }} - {{ opinion.text|truncatechars:20 }}</p> </a>
     {% endfor %}
 
-    {% buttons %}
+    <div class="buttons">
         <a href="{% url 'rating:index' %}" class="btn btn-primary">Strona główna</a>
         <a href="{% url 'rating:add_opinion' subject.id %}" class="btn btn-success">Dodaj opinię</a>
-    {% endbuttons %}
+    </div>
+
 
 {% endblock %}

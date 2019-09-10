@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <title>
+        {% block title %}
+            System oceny przedmiotów
+        {% endblock %}
+    </title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+</head>
+<body>
+
+{#    User: {{ user.username }}#}
+    {% block body %}
+
+    {% endblock %}
+
+</body>
+<div class="logout_button">
+    {%  if user.is_authenticated %}
+        <a href="{% url 'logout' %}" class="btn btn-danger"> Wyloguj </a>
+    {% endif %}
+</div>
+</html>

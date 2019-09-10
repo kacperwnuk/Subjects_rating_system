@@ -1,0 +1,21 @@
+{% extends "rating/base.html" %}
+{% block title %}
+   Dodaj przedmiot
+{% endblock %}
+{% block body %}
+
+    <form action="{% url 'rating:activate_subject' %}" method="post">
+        {% csrf_token %}
+        {% for subject in subject_list %}
+            <input type="checkbox" name="{{ subject.shortcut }}" value={{ subject }} > {{ subject.fullname }} - created by {{ subject.user.basic_info.username }}<br>
+        {% endfor %}
+        <input type="submit" value="Aktywuj">
+    </form>
+
+{#    <select>#}
+{#        {% for subject in subject_list %}#}
+{#            <option value="{% url 'rating:subject' subject.id %}"> {{ subject.fullname }} - {{ subject.tutor }}</option>#}
+{#        {% endfor %}#}
+{#    </select>#}
+
+{% endblock %}

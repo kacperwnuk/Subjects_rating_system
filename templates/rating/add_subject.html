@@ -1,19 +1,17 @@
-{% extends "base.html" %}
+{% extends "rating/base.html" %}
 {% block title %}
    Dodaj przedmiot
 {% endblock %}
 {% block body %}
     {% load bootstrap4 %}
-    {% bootstrap_css %}
-    {% bootstrap_javascript jquery='full' %}
 
     <h2>Dodaj przedmiot</h2>
         <form method="post">
         {% csrf_token %}
         {% bootstrap_form form %}
-        {% buttons %}
+        <div class="buttons">
             <button type="submit" class="btn btn-primary">Dodaj</button>
             <a href="{% url 'rating:index' %}" class="btn btn-danger">Wróć</a>
-        {% endbuttons %}
+        </div>
     </form>
 {% endblock %}

@@ -1,11 +1,8 @@
-{% extends "base.html" %}
+{% extends "rating/base.html" %}
 {% block title %}
     Opinia
 {% endblock %}
 {% block body %}
-    {% load bootstrap4 %}
-    {% bootstrap_css %}
-    {% bootstrap_javascript jquery='full' %}
 
     <h1>{{ opinion.title }}</h1>
     <h2>{{ opinion.subject }}</h2>
@@ -18,11 +15,11 @@
     <p>{{ opinion.text }}</p>
     <p>Ocena: {{ opinion.rating }}</p>
 
-    {% buttons %}
+    <div class="buttons">
         {% if logged_user == opinion.user %}
             <a href="{% url 'rating:modify_opinion' opinion.pk %}" class="btn btn-primary">Edytuj opinię</a>
         {% endif %}
         <a href="{% url 'rating:subject' opinion.subject.pk %}" class="btn btn-danger">Strona główna</a>
-    {% endbuttons %}
+    </div>
 
 {% endblock %}
