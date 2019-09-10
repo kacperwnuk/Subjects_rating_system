@@ -19,7 +19,7 @@
         {% if logged_user == opinion.user %}
             <a href="{% url 'rating:modify_opinion' opinion.pk %}" class="btn btn-primary">Edytuj opinię</a>
         {% endif %}
-        <a href="{% url 'rating:subject' opinion.subject.pk %}" class="btn btn-danger">Strona główna</a>
+        <a href="{% url 'rating:subject' opinion.subject.pk %}" class="btn btn-danger">Strona główna przedmiotu</a>
     </div>
 
 {% endblock %}
