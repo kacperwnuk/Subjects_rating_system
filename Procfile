@@ -1,0 +1,1 @@
+web: gunicorn subjects_rating_system.wsgi --log-file -
