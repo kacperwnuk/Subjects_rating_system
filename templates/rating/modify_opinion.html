@@ -1,18 +1,18 @@
 {% extends "rating/base.html" %}
 {% block title %}
-    Strona główna
+    Opinion
 {% endblock %}
 {% block body %}
     {% load bootstrap4 %}
 
     <h1>{{ subject.shortcut }}</h1>
-    <h2>Modyfikuj opinię</h2>
+    <h2>Edit opinion</h2>
     <form method="post" class="form">
         {% csrf_token %}
         {% bootstrap_form form %}
         <div class="buttons">
-            <button type="submit" class="btn btn-primary" > Edytuj </button>
-            <a href="{% url 'rating:opinion' opinion.pk %}" class="btn btn-danger">Wróć</a>
+            <button type="submit" class="btn btn-primary" > Edit </button>
+            <a href="{% url 'rating:opinion' opinion.pk %}" class="btn btn-danger">Back</a>
         </div>
     </form>
 

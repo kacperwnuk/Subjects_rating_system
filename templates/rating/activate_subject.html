@@ -6,12 +6,20 @@
 
     <form action="{% url 'rating:activate_subject' %}" method="post">
         {% csrf_token %}
-        {% for subject in subject_list %}
-            <input type="checkbox" name="{{ subject.shortcut }}" value={{ subject }} > {{ subject.fullname }} - created by {{ subject.user.basic_info.username }}<br>
-        {% endfor %}
-        <input type="submit" value="Aktywuj">
+        {% if subject_list  %}
+            {% for subject in subject_list %}
+                <input type="checkbox" name="{{ subject.shortcut }}" value={{ subject }} > {{ subject.fullname }} - created by {{ subject.user.basic_info.username }}<br>
+            {% endfor %}
+            <input type="submit" value="Aktywuj">
+        {% else %}
+            <div class="info">
+                <p>There is no subjects to activate!</p>
+            </div>
+        {% endif %}
     </form>
-
+    <div class="buttons">
+        <a href="{% url 'rating:index' %}" class="btn btn-primary">Main page</a>
+    </div>
 {#    <select>#}
 {#        {% for subject in subject_list %}#}
 {#            <option value="{% url 'rating:subject' subject.id %}"> {{ subject.fullname }} - {{ subject.tutor }}</option>#}

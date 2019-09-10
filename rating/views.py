@@ -1,5 +1,6 @@
 import datetime
 
+from django import forms
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, AccessMixin
@@ -18,7 +19,8 @@ def find_subjects(request):
         subjects = [subject for subject in subjects if
                     isinstance(subject.rating, float) and subject.rating > float(request.GET['rating'])]
     elif request.GET.get('number_of_opinions'):
-        subjects = [subject for subject in subjects if subject.number_of_opinions >= float(request.GET['number_of_opinions'])]
+        subjects = [subject for subject in subjects if
+                    subject.number_of_opinions >= float(request.GET['number_of_opinions'])]
     print(subjects)
     return subjects
 
@@ -27,8 +29,8 @@ def find_subjects(request):
 @login_required
 def index(request):
     context = {'subjects': find_subjects(request),
-                   'logged_user': User.objects.filter(basic_info=request.user)[0],
-                   'opinions': Opinion.objects.all()}
+               'logged_user': User.objects.filter(basic_info=request.user)[0],
+               'opinions': Opinion.objects.all()}
 
     return render(request, 'rating/index.html', context)
 
@@ -109,9 +111,18 @@ class ModifyOpinionView(LoginRequiredMixin, generic.UpdateView):
         return super().form_valid(form)
 
 
+class SignUpForm(UserCreationForm):
+    email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.')
+
+    class Meta:
+        import django.contrib.auth.models as auth_model
+        model = auth_model.User
+        fields = ('username', 'email', 'password1', 'password2')
+
+
 def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = SignUpForm(request.POST)
         if form.is_valid():
             basic_user = form.save()
             user = User(basic_info=basic_user)
@@ -120,7 +131,7 @@ def register(request):
             user.save()
             return redirect('/account/login')
     else:
-        form = UserCreationForm()
+        form = SignUpForm()
     return render(request, 'registration/register.html', {'form': form})
 
 
