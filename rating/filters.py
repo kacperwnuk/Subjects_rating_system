@@ -1,6 +1,6 @@
 import django_filters
 
-from rating.models import Subject, Opinion
+from rating.models import Subject
 
 
 class SubjectFilter(django_filters.FilterSet):
@@ -12,12 +12,5 @@ class SubjectFilter(django_filters.FilterSet):
 
 
 class OpinionFilter(django_filters.FilterSet):
-
     min_rating = django_filters.NumberFilter(field_name='rating', lookup_expr='gte', label='Minimal mark')
 
-    # rating = django_filters.NumberFilter(choices=STATUS_CHOICES, lookup_expr='gt')
-    # year__gt = django_filters.NumberFilter(name='date', lookup_expr='year__gt')
-
-    # class Meta:
-    #     model = Opinion
-    #     fields = ['subject']

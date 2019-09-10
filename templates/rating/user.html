@@ -10,7 +10,8 @@
     <p>Last opinions:</p>
     <div class="list-group">
         {% for opinion in opinions %}
-            <a href="{% url 'rating:opinion' opinion.pk %}" class="list-group-item list-group-item-action align-items-center">{{ opinion.subject.shortcut }} - {{ opinion.title }} - {{ opinion.rating }}</a><br/>
+            <a href="{% url 'rating:opinion' opinion.pk %}"
+               class="list-group-item list-group-item-action align-items-center">{{ opinion.subject.shortcut }} - {{ opinion.title }} - {{ opinion.rating }}</a><br/>
         {% endfor %}
     </div>
     <div class="buttons">

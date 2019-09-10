@@ -7,40 +7,34 @@
 {% endblock %}
 {% block body %}
 
-<!--
-    <select>
-        {% for subject in subject_list %}
-        <option value="{% url 'rating:subject' subject.id %}"> {{ subject.fullname }} - {{ subject.tutor }}</option>
-        {% endfor %}
-    </select>
--->
     <h1>Subjects</h1>
     <br/>
     <form method="get">
         Mark
         <select name="rating">
-              <option value=""></option>
-              <option value="1">More than 1</option>
-              <option value="2">More than 2</option>
-              <option value="3">More than 3</option>
-              <option value="4">More than 4</option>
-              <option value="5">More than 5</option>
-         </select>
+            <option value=""></option>
+            <option value="1">More than 1</option>
+            <option value="2">More than 2</option>
+            <option value="3">More than 3</option>
+            <option value="4">More than 4</option>
+            <option value="5">More than 5</option>
+        </select>
         Number of opinions
         <select name="number_of_opinions">
-              <option value=""></option>
-              <option value="1">1 or more</option>
-              <option value="5">5 or more</option>
-              <option value="10">10 or more</option>
-         </select>
-         <input type="submit" value="Filter" class="btn btn-primary">
+            <option value=""></option>
+            <option value="1">1 or more</option>
+            <option value="5">5 or more</option>
+            <option value="10">10 or more</option>
+        </select>
+        <input type="submit" value="Filter" class="btn btn-primary">
     </form>
     <div class="list-group">
         {% for subject in subjects %}
-             <li class="list-group-item d-flex justify-content-between align-items-center">
-                <a href="{% url 'rating:subject' subject.id %}" class="list-group-item list-group-item-action"> <p>{{ subject.fullname }} - {{ subject.tutor }}</p> </a>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <a href="{% url 'rating:subject' subject.id %}" class="list-group-item list-group-item-action">
+                    <p>{{ subject.fullname }} - {{ subject.tutor }}</p></a>
                 <span class="badge badge-primary badge-pill">{{ subject.number_of_opinions }}</span>
-             </li>
+            </li>
         {% endfor %}
     </div>
 

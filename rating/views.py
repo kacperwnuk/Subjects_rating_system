@@ -3,13 +3,16 @@ import datetime
 from django import forms
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, AccessMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.views import generic
 from django.views.decorators.http import require_GET
+from django.views.generic import FormView
 
 from rating.filters import OpinionFilter
+from rating.forms import InactiveSubjectForm
 from rating.models import Subject, Opinion, User, Status
 
 
@@ -74,6 +77,9 @@ class AddSubjectView(LoginRequiredMixin, generic.CreateView):
         # )
         return super().form_valid(form)
 
+    def get_success_url(self):
+        return reverse('rating:index')
+
 
 class OpinionView(LoginRequiredMixin, generic.DetailView):
     template_name = 'rating/opinion.html'
@@ -126,9 +132,11 @@ def register(request):
         if form.is_valid():
             basic_user = form.save()
             user = User(basic_info=basic_user)
-            user.basic_info.is_active = False
+            # user.basic_info.is_active = False
             user.basic_info.save()
             user.save()
+            from django.db import connection
+            print(connection.queries)
             return redirect('/account/login')
     else:
         form = SignUpForm()
@@ -146,12 +154,20 @@ class UserView(LoginRequiredMixin, generic.DetailView):
         return context
 
 
-class ActivateSubjectView(LoginRequiredMixin, UserPassesTestMixin, generic.ListView):
+class ActivateSubjectView(LoginRequiredMixin, UserPassesTestMixin, FormView):
     template_name = 'rating/activate_subject.html'
-    model = Subject
+    form_class = InactiveSubjectForm
+
+    def form_valid(self, form):
+        subjects_to_be_activated = form.cleaned_data.get('Inactive_Subjects')
+        print(subjects_to_be_activated)
+        for subject in Subject.objects.filter(pk__in=subjects_to_be_activated):
+            subject.status = Status.ACCEPTED.value
+            subject.save()
+        return super().form_valid(form)
 
     def test_func(self):
         return self.request.user.is_staff
 
-    def get_queryset(self):
-        return Subject.objects.all().filter(status=Status.WAITING_FOR_CONFIRMATION)
+    def get_success_url(self):
+        return reverse('rating:activate_subject')
