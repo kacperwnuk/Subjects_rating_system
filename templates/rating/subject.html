@@ -7,7 +7,7 @@
     <h1>{{ subject.fullname }} - {{ subject.shortcut }}</h1>
     <h2>{{ subject.tutor }}</h2>
     <p>Info: {{ subject.basic_info }}</p>
-    <p>Mark: {{ subject.rating|floatformat:2 }} </p>
+    <p>Average mark: {{ subject.rating|floatformat:2 }} </p>
 
     <h3>Opinions:</h3>
     <form method="get">
@@ -15,7 +15,9 @@
         <button type="submit" class="btn btn-primary">Filter</button>
     </form>
     {% for opinion in filter.qs %}
-        <a href="{% url 'rating:opinion' opinion.id %}"> <p>{{ opinion.title }} - {{ opinion.text|truncatechars:20 }}</p> </a>
+        <a href="{% url 'rating:opinion' opinion.id %}"
+           class="list-group-item list-group-item-action align-items-center"> {{ opinion.title }}
+            - {{ opinion.text|truncatechars:20 }} </a><br/>
     {% endfor %}
 
     <div class="buttons">

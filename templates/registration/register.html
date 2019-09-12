@@ -2,11 +2,17 @@
 {% block title %}
     Registration
 {% endblock %}
+
 {% block body %}
+    {% load bootstrap4 %}
+
     <h2>Sign up</h2>
-    <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Sign up</button>
-  </form>
+    <form method="post" style="text-align: center">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <button type="submit" class="btn btn-success">Sign up</button>
+    </form>
+{% endblock %}
+
+{% block logout_button %}
 {% endblock %}

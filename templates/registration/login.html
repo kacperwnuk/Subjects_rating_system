@@ -10,9 +10,11 @@
     {{ form.as_p }}
 
     <div class="buttons">
-        <button type="submit">Login</button>
+        <button type="submit" class="btb=n btn-primary">Login</button>
         <a href="{% url 'rating:register' %}" class="btn btn-success">Create</a>
     </div>
   </form>
 
+{% endblock %}
+{% block logout_button %}
 {% endblock %}

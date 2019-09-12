@@ -17,13 +17,13 @@
 </head>
 <body>
 
-{#    User: {{ user.username }}#}
-    {% block body %}
-
-    {% endblock %}
+{% block body %}
+{% endblock %}
 
 </body>
-<div class="logout_button">
+{% block logout_button %}
+    <div class="logout_button">
         <a href="{% url 'logout' %}" class="btn btn-danger"> Logout </a>
-</div>
+    </div>
+{% endblock %}
 </html>

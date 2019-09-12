@@ -36,7 +36,8 @@ class Subject(models.Model):
     shortcut = models.CharField(max_length=10)
     tutor = models.CharField(max_length=100)
     basic_info = models.TextField(max_length=300)
-    status = models.CharField(choices=((tag.name, tag.value) for tag in Status), max_length=50, default=Status.WAITING_FOR_CONFIRMATION.name)
+    status = models.CharField(choices=((tag.name, tag.value) for tag in Status), max_length=50,
+                              default=Status.WAITING_FOR_CONFIRMATION.name)
 
     @property
     def rating(self):
@@ -70,5 +71,3 @@ class Opinion(models.Model):
 
     def __str__(self):
         return self.title
-
-
